@@ -1,16 +1,25 @@
 import yaml
 import subprocess
 
-def install_controller():
+def get_controller():
 	stream = file('salt/config.yml', 'r')
-	controller = yaml.load(stream)['openstack']['controller']
+	return yaml.load(stream)['openstack']['controller']
 
+def get_stages():
 	stream = file('salt/stage.yml', 'r')
-	stages = yaml.load(stream)['stages']
+	return yaml.load(stream)
 
+def install_controller():
+	controller = get_controller()
+	stages = get_stages()['stages']
 	opsctl = stages['controller']
 
-	result, response = exec_salt_state(controller, 'openstack.cloudrepo')
+	try:
+		cmd = "sudo salt '%s' state.highstate" % controller
+		subprocess.check_call(cmd, shell=True)
+	except:
+		pass
+	#result, response = exec_salt_state(controller, 'openstack.cloudrepo')
 
 	response = {}
 	if opsctl['docker'] != 2:
@@ -22,7 +31,7 @@ def install_controller():
 			if opsctl[target] != 2:
 				result, response[target] = exec_salt_state(controller, target)
 				opsctl[target] = 2 if result else 0
-				if target = 'mariadb' and result:
+				if target == 'mariadb' and result:
 					cmd = 'sudo service salt-minion restart'
 					subprocess.check_output(cmd, shell=True)
 	
@@ -64,10 +73,8 @@ def install_controller():
 		result, response['horizon'] = exec_salt_state(controller, 'openstack.horizon')
 		opsctl['horizon'] = 2 if result else 0
 
-	opsctl.pop('total')	
-	opsctl['total'] = sum(opsctl.values())
-
 	stages['controller'] = opsctl
+	stages['nodes'][controller] = sum(opsctl.values())*5
 
 	with open('salt/stage.yml', 'w') as f:
 		f.write(yaml.dump({'stages': stages}, default_flow_style=False))

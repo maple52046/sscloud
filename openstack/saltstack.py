@@ -43,7 +43,6 @@ def get_nodes():
 				controller['nova'] = 0
 				controller['neutron'] = 0
 				controller['horizon'] = 0
-				controller['total'] = 0
 
 				nodes = {}
 				for minion in minions:
@@ -60,7 +59,13 @@ def get_nodes():
 		nodes = {}
 		for hostname, state in stages['nodes'].items():
 			try:
-				newstate = {0: 'Waiting', 1: 'Installing', 2: 'Finished'}[int(state)]
+				newstate = int(state)
+				if newstate <= 0:
+					newstate = 'Waiting'
+				elif newstate < 100:
+					newstate = 'Installing'
+				else:
+					newstate = 'Finished'
 			except:
 				newstate = 'Unknown'
 			nodes[hostname] = newstate

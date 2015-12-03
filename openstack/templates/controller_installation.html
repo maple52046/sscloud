@@ -4,17 +4,35 @@
 	<title>Setting OpenStack Environment - SSCloud</title>
 	{% load staticfiles %}
 	<link rel="stylesheet" type="text/css" href="{% static 'css/basic.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/table.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/input.css' %}">
 	<!--script src="{% static 'js/confirm.js' %}"></script-->
 </head>
 <body>
 	<header>OpenStack Controller Installation</header>
 	<div id="main">
-	<ul>
-		<h2>OpenStack controller service</h2>
-		{% for service, status in stages.items %}
-		<li>{{ service }}: {{ status }}</li>
-		{% endfor %}
-	</ul>
+	<table>
+		<caption>Node: {{ node }}</caption>
+		<thead>
+			<tr><th>Component</th><th>Status</th></tr>
+		</thead>
+		<tbody>
+			{% for service, status in stages.items %}
+			<tr>
+				<td>{{ service }}</td>
+				<td>{{ status }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr><th colspan="2">Done: {{ done }}</th></tr>
+		</tfoot>
+	</table>
+	<!--form action="install/controller" method="post"-->
+	<form method="post">
+	<input type="hidden" name="start" value="true" />{% csrf_token %}
+	<input type="submit" value="Start OpenStack Deployment on this node" />
+	</form>
 	</div>
 </body>
 </html>
