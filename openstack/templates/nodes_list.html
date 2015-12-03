@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Setting OpenStack Environment - SSCloud</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/basic.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/table.css' %}">
+</head>
+<body>
+	<header>Node list</header>
+	<div id="main">
+	<table>
+		<thead>
+		<tr><th>Node ID</th><th>Node State</th></tr>
+		</thead>
+		<tbody>
+		<tr>
+		{% for key, value in nodes.items %}
+			<td>{{ key }}</td>
+			<td>{{ value }}</td>
+		{% endfor %}
+		</tr>
+		</tbody>
+	</table>
+	</div>
+</body>
+</html>

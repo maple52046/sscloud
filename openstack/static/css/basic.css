@@ -1,0 +1,17 @@
+header {
+	display: block;
+	color: white;
+	text-align: center;
+	width: 100%;
+	background-color: black;
+	font-size: 36px;
+	font-weight: bold;
+}
+
+#main {
+	width: 80%;
+	/*background-color: gray*/;
+	padding: 20px;
+	/*margin: 20px;*/
+	margin: 0px auto;
+}

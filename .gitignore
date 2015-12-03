@@ -1,2 +1,4 @@
 *.pyc
 *.bak
+*.sqlite3
+venv/

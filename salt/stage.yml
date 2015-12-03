@@ -1,0 +1,11 @@
+stages:
+  controller:
+    cinder: 0
+    glance: 0
+    keystone: 0
+    mariadb: 0
+    neutron: 0
+    nova: 0
+    rabbitmq: 0
+  nodes:
+    twin-35: 0

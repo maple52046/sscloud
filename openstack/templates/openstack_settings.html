@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Setting OpenStack Environment - SSCloud</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/basic.css' %}">
+	<script src="{% static 'js/confirm.js' %}"></script>
+</head>
+<body>
+	<header>Setting OpenStack Environment</header>
+	<div id="main">
+	<form id="openstack_settings" action="genconfig" method="post">{% csrf_token %}
+	<ul>
+		<h2>Administrator Account settings</h2>
+		<li><label for="passwd">Password:</label>
+		<input id="passwd" name="passwd" type="password" /></li>
+		<li><label for="email">E-mail:</label>
+		<input id="email" name="email" type="text" /></li>
+		<br />
+
+		<h2>OpenStack Nodes</h2>
+		<li><label for="controller">Select node to install OpenStack controller:</label>
+		<select id="controller" name="controller">
+		{% for node in nodes %}
+			<option value="{{ node }}">{{ node }}</option>
+		{% endfor %}
+		</select>
+		<li><label for="enable_computes">
+		Install OpenStack compute service:
+		</label>
+		<select id="computes" name="computes">
+			<option value="all">All nodes (include controller)</option>
+			<option value="other">Other nodes (exclude controller)</option>
+		</select>
+		</li>
+		<br />
+
+		<h2>Web dashboard</h2>
+		<li><label for="protocol">Protocol:</label>
+		<select id="protocol" name="protocol">
+			<option value="http">HTTP</option>
+			<option value="https">HTTPS</option>
+		</select>
+		</li>
+		<li><label for="domainname">Domainname:</label>
+		<input id="domainname" name="domainname" type="txt" />
+		</li>
+	</ul>
+	<button onclick="submit_settings">Submit</button>
+	</form>
+	</div>
+</body>
+</html>

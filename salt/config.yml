@@ -1,0 +1,10 @@
+openstack:
+  admin:
+    email: jhku@sslab.cs.nthu.edu.tw
+    password: sscloudadmin
+    token: 032e78a8-6787-4ccb-a30d-1c4806ad8bef
+  computes: all
+  controller: twin-35
+  public:
+    domianname: sscloud.unicloud.org.tw
+    protocol: http
