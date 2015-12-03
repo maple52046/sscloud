@@ -16,5 +16,6 @@ sudo service salt-master restart
 sudo apt-get -y install python-virtualenv
 test -d venv || virtualenv --no-site-packages venv
 venv/bin/pip install -r requirements.txt
+sudo pip install docker-py==1.6.0
 
 exit 0

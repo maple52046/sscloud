@@ -17,11 +17,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from openstack.views import openstack_settings, generate_config, nodes_list
+from openstack.views import openstack_settings, generate_config, nodes_list, controller_installation
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^settings', openstack_settings),
     url(r'^genconfig', generate_config),
     url(r'^nodes', nodes_list),
+	url(r'^install/controller', controller_installation),
 ]

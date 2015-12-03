@@ -1,11 +1,15 @@
 stages:
   controller:
-    cinder: 0
-    glance: 0
-    keystone: 0
-    mariadb: 0
-    neutron: 0
-    nova: 0
-    rabbitmq: 0
+    admin: 2
+    cinder: 2
+    docker: 2
+    glance: 2
+    horizon: 2
+    keystone: 2
+    mariadb: 2
+    neutron: 2
+    nova: 2
+    rabbitmq: 2
+    total: 20
   nodes:
     twin-35: 0

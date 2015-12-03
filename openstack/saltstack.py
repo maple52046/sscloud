@@ -33,13 +33,17 @@ def get_nodes():
 		except IOError:
 				update_stage = True
 				controller = {}
+				controller['docker'] = 0
 				controller['rabbitmq'] = 0
 				controller['mariadb'] = 0
 				controller['keystone'] = 0
+				controller['admin'] = 0
 				controller['glance'] = 0
 				controller['cinder'] = 0
 				controller['nova'] = 0
 				controller['neutron'] = 0
+				controller['horizon'] = 0
+				controller['total'] = 0
 
 				nodes = {}
 				for minion in minions:

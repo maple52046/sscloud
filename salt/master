@@ -550,7 +550,8 @@ file_ignore_glob:
 #    - /srv/pillar
 #
 ext_pillar:
-  - cmd_yaml: cat /srv/salt/sscloud.yml
+  - cmd_yaml: cat /srv/salt/config.yml
+  - cmd_yaml: cat /srv/salt/stage.yml
 #  - hiera: /etc/hiera.yaml
 
 # The ext_pillar_first option allows for external pillar sources to populate

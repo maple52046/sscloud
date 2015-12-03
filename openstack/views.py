@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from saltstack import get_minions, get_nodes
 from config import gen_config
+from install import install_controller
 
 # Create your views here.
 def nodes_list(request):
@@ -24,3 +25,6 @@ def generate_config(request):
 	response = 'Finished' if gen_config(args) else 'Error'
 	return render(request, 'generate_config.html', {'config_state':response})
 
+def controller_installation(request):
+	stages , response = install_controller()
+	return render(request, 'controller_installation.html', {'stages':stages, 'response':response})

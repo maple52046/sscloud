@@ -1,0 +1,59 @@
+# Proxy NoVNC
+#
+upstream nova-consoleproxy {
+	server 127.0.0.1:6080 fail_timeout=0;
+}
+
+server {
+	listen 80 default_server;
+	root /var/www/html;
+	index index.html index.htm;
+	server_name _;
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		#try_files $uri @horizon;
+		proxy_pass http://horizon;
+	}
+
+	location /websockify {
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-Host $host;
+		proxy_set_header X-Forwarded-Server $host;
+		proxy_set_header x-forwarded-proto https;
+		proxy_set_header Host $host;
+		proxy_http_version 1.1;
+		proxy_read_timeout 86400;
+
+		proxy_pass http://nova-consoleproxy;
+
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection "upgrade";
+	}
+
+	location /console {
+		rewrite ^/console/(.*) /$1 break;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-Host $host;
+		proxy_set_header X-Forwarded-Server $host;
+		proxy_set_header x-forwarded-proto https;
+		proxy_set_header Host $host;
+		proxy_http_version 1.1;
+		proxy_read_timeout 86400;
+
+		proxy_pass http://nova-consoleproxy;
+
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection "upgrade";
+	}
+
+	# deny access to .htaccess files, if Apache's document root
+	# concurs with nginx's one
+	#
+	location ~ /\.ht {
+		deny all;
+	}
+}
